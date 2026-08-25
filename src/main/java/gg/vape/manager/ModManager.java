@@ -35,6 +35,7 @@ import gg.vape.module.utility.InventoryFill;
 import gg.vape.module.combat.KnockbackDelay;
 import gg.vape.module.combat.silentaura.SilentAuraClicker;
 import gg.vape.module.render.BedPlates;
+import gg.vape.module.render.TargetHud;
 import gg.vape.module.world.MurderFinder;
 import gg.vape.module.none.ClientSettings;
 import gg.vape.module.none.MouseDelayFix;
@@ -146,7 +147,7 @@ implements EventListener {
 
     public void init() {
         GuiComponent[] legacyComponentsSnapshot = Category.getLegacyComponents();
-        Mod[] coreModules = new Mod[62];
+        Mod[] coreModules = new Mod[63];
         coreModules[0] = new ClientSettings();
         coreModules[1] = new LeftClicker();
         coreModules[2] = new RightClicker();
@@ -210,6 +211,7 @@ implements EventListener {
         coreModules[59] = new InventoryFill();
         coreModules[60] = new BedPlates();
         coreModules[61] = new BedwarUtils();
+        coreModules[62] = new TargetHud();
         this.registerModules(Stream.of(coreModules));
         ModRegistrationBuilder.create().setModule(new Explosions()).addVersionConstraint(ForgeVersion.MC_1_16_5.b()).registerWith(this);
         Mod[] versionConstrainedModules = new Mod[2];

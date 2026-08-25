@@ -31,6 +31,7 @@ extends FrameHeaderComponent {
     private final GlyphIconComponent syncIcon;
     private final ClickGuiMainFrameHeaderActionComponent refreshAction = new ClickGuiMainFrameHeaderActionComponent();
     private final GlyphIconComponent settingsIcon;
+    private final GlyphIconComponent uninjectIcon;
     private final List<ClickGuiSectionTabComponent> sectionTabs;
     private final List<GlyphIconComponent> actionIcons;
     private final GlyphIconComponent refreshIcon;
@@ -182,11 +183,24 @@ extends FrameHeaderComponent {
         this.settingsIcon.setBackgroundAnimationColors(ClickGuiMainFrameHeader.J.t, ClickGuiMainFrameHeader.J.M);
         this.settingsIcon.setCornerRadius(5.0f);
         this.settingsIcon.setClickListener(() -> ClickGuiMainFrameHeader.lambda$new$8(clickGuiMainFrame));
-        this.actionIcons.addAll(Arrays.asList(this.syncIcon, this.overlaysIcon, this.settingsIcon));
-        this.addChildren(this.refreshAction, this.syncIcon, this.overlaysIcon, this.settingsIcon);
+        this.uninjectIcon = new GlyphIconComponent("newclose", 6.0, 6.0, 10.0, 10.0, ClickGuiMainFrameHeader.J.V, ClickGuiMainFrameHeader.J.f, null);
+        this.uninjectIcon.setCenterHorizontally(true);
+        this.uninjectIcon.setCenterVertically(true);
+        this.uninjectIcon.setBackgroundAnimationColors(new java.awt.Color(180, 40, 40), new java.awt.Color(220, 50, 50));
+        this.uninjectIcon.setCornerRadius(5.0f);
+        this.uninjectIcon.w("Disable all modules and close");
+        this.uninjectIcon.setClickListener(ClickGuiMainFrameHeader::lambda$uninject$9);
+        this.actionIcons.addAll(Arrays.asList(this.syncIcon, this.overlaysIcon, this.settingsIcon, this.uninjectIcon));
+        this.addChildren(this.refreshAction, this.syncIcon, this.overlaysIcon, this.settingsIcon, this.uninjectIcon);
     }
 
     private static void lambda$new$2() {
         ClientSettings.clickGuiFrameManager.showLayer(ClickGuiLayer.OVERLAYS);
+    }
+
+    private static void lambda$uninject$9() {
+        Vape.INSTANCE.getModManager().disableNonHudModules();
+        ClientSettings.INSTANCE.switchFrameStack(ClientSettings.mainStack);
+        Vape.INSTANCE.getNotificationManager().showInfo("Uninject", "All modules disabled", 2000L);
     }
 }
